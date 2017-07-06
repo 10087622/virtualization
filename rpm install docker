@@ -1,0 +1,18 @@
+使用代理服务器，配置yum，下载docker失败。
+登录官网，一开始获取rpm包如下：
+
+docker-ce-17.03.1.ce-1.el7.centos.x86_64.rpm
+docker-ce-selinux-17.03.0.ce-1.el7.centos.noarch.rpm
+
+直接安装yum localinstall docker-ce-*.rpm
+出现报错：
+--> 正在处理依赖关系 docker-ce-selinux >= 17.03.1.ce-1.el7.centos，它被软件包 docker-ce-17.03.1.ce-1.el7.centos.x86_64 需要
+
+于是将发现自己版本不匹配，于是下载docker-ce-selinux-17.03.1.ce-1.el7.centos.noarch.rpm，再次安装，显示成功。
+
+[root@centos7 caq]# docker -v
+Docker version 17.03.1-ce, build c6d412e
+
+but，没看到默认的image，so，我来创建一个自己的hello world的镜像。
+
+
