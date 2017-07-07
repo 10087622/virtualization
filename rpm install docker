@@ -43,7 +43,8 @@ docker的镜像创建，一般有两种方法，一种是使用docker commit创�
 
 touch 一个Dockerfile，内容如下
 # This is a comment
-FROM docker.xxx.com.cn:5000/centos:7
+FROM docker.xxx.com.cn:5000/centos:7                     ###这个要写对，一开始这个没写对，就会报错，后来通过tcpdump抓包才知道镜像找不到，
+                                                         ###当然通过journalctl -u docker -f 也能看到一些错
 MAINTAINER chenanqing@163.com.cn
 USER root
 CMD echo "hello world,the first image of caq is successful"
