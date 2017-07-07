@@ -16,3 +16,72 @@ Docker version 17.03.1-ce, build c6d412e
 but，没看到默认的image，so，我来创建一个自己的hello world的镜像。
 
 
+由于官网的镜像仓库tmd很慢，所以有必要找一个内网的镜像仓库，还有公司的爱好者提供了一个：
+
+修改/usr/lib/systemd/system/docker.service如下：
+EnvironmentFile=/etc/sysconfig/docker
+ExecStart=/usr/bin/dockerd $OPTIONS
+
+然后对文件： /etc/sysconfig/docker 
+增加一项： OPTIONS="--insecure-registry 0.0.0.0/0"
+
+其中 0.0.0.0/0为仓库地址，可以是域名，如果/etc/resolv.conf没配置好，也可以填地址。
+
+重启docker:
+
+service docker restart 后，然后登陆。
+docker login docker.xxx.com.cn:5000   xxx需要根据自己情况修改
+
+找一个命名空间为公开的环境，然后找到一个基础镜像，为制作dockerfile做准备。
+我找的是：
+docker pull docker.xxx.com.cn:5000/公开的/centos:7
+不一定要下拉，下拉只是我随手测试一下能否下拉。
+
+
+docker的镜像创建，一般有两种方法，一种是使用docker commit创建，还有一种是使用docker build命令和Dockerfile文件创建，我先使用第二种试一下：
+
+
+touch 一个Dockerfile，内容如下
+# This is a comment
+FROM docker.xxx.com.cn:5000/centos:7
+MAINTAINER chenanqing@163.com.cn
+USER root
+CMD echo "hello world,the first image of caq is successful"
+
+然后：docker build -t 10087622/caq_docker:v1 .
+[root@centos7 My_Docker_Hello]# docker build -t 10087622/caq_docker:v1 . 
+Sending build context to Docker daemon 2.048 kB
+Step 1/4 : FROM docker.xxx.com.cn:5000/centos:7
+ ---> 67591570dd29
+Step 2/4 : MAINTAINER chenanqing@163.com.cn
+ ---> Running in 933e357c6fb6
+ ---> dc1735d2ec10
+Removing intermediate container 933e357c6fb6
+Step 3/4 : USER root
+ ---> Running in 2fac20eba672
+ ---> 50a78b1f43e6
+Removing intermediate container 2fac20eba672
+Step 4/4 : CMD echo "hello world,the first image of caq is successful"
+ ---> Running in f4e26fd3372a
+ ---> 6510bdaaeee4
+Removing intermediate container f4e26fd3372a
+Successfully built 6510bdaaeee4
+
+
+创建完毕后，使用docker images 查看一下：
+[root@centos7 My_Docker_Hello]# docker images
+REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
+10087622/caq_docker             v1                  6510bdaaeee4        14 minutes ago      192 MB
+docker.xxx.com.cn:5000/centos   7                   67591570dd29        6 months ago        192 MB
+
+创建成功后可以运行检查一下：
+[root@centos7 /]# docker run -t 10087622/caq_docker:v1 pwd
+/
+[root@centos7 /]# docker run -t 10087622/caq_docker:v1 ls
+anaconda-post.log  dev	home  lib64	  media  opt   root  sbin  sys	usr
+bin		   etc	lib   lost+found  mnt	 proc  run   srv   tmp	var
+
+
+
+
+
