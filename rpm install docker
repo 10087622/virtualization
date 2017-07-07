@@ -76,12 +76,18 @@ REPOSITORY                      TAG                 IMAGE ID            CREATED 
 docker.xxx.com.cn:5000/centos   7                   67591570dd29        6 months ago        192 MB
 
 创建成功后可以运行检查一下：
+不带参数的情况下，会有默认输出，这个输出就是在Dockerfile里面的CMD的输出，
+[root@centos7 My_Docker_Hello]# docker run -t 10087622/caq_docker:v1 
+hello world,the first image of caq is successful
+
+run命令如果指定了参数会把CMD里的参数覆盖
 [root@centos7 /]# docker run -t 10087622/caq_docker:v1 pwd
 /
 [root@centos7 /]# docker run -t 10087622/caq_docker:v1 ls
 anaconda-post.log  dev	home  lib64	  media  opt   root  sbin  sys	usr
 bin		   etc	lib   lost+found  mnt	 proc  run   srv   tmp	var
 
+ps:要注意CMD和ENTRYPOINT的写法的区别。
 
 
 
