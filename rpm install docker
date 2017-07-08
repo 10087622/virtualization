@@ -98,4 +98,6 @@ docker commit a57614e00361 10087622/caq_docker:v4
 REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
 10087622/caq_docker             v4                  3a581e02ee1b        3 minutes ago       192 MB
 
-
+接下来将自己的image上传到仓库：
+[root@centos7 My_Docker_gcc]# docker tag 10087622/caq_docker:v3 docker.xxx.com.cn:5000/10087622/basic_docker:V3
+[root@centos7 My_Docker_gcc]# docker push docker.xxx.com.cn:5000/10087622/basic_docker:V3
