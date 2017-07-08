@@ -89,6 +89,7 @@ bin		   etc	lib   lost+found  mnt	 proc  run   srv   tmp	var
 
 ps:要注意CMD和ENTRYPOINT的写法的区别。
 
+第二种创建image的方法：
 在image 6510bdaaeee4里面，touch 一个文件，或者安装一个程序，然后提交修改，就可以生成一个新的image
 
 docker commit a57614e00361 10087622/caq_docker:v4
