@@ -16,7 +16,7 @@ Docker version 17.03.1-ce, build c6d412e
 but，没看到默认的image，so，我来创建一个自己的hello world的镜像。
 
 
-由于官网的镜像仓库tmd很慢，所以有必要找一个内网的镜像仓库，还有公司的爱好者提供了一个：
+由于官网的镜像仓库tmd很慢，所以有必要找一个内网的镜像仓库，还好公司的爱好者提供了一个：
 
 修改/usr/lib/systemd/system/docker.service如下：
 EnvironmentFile=/etc/sysconfig/docker
